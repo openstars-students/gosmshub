@@ -74,7 +74,7 @@ func (svr *SendSMSService) Send(stream pb.SendSMS_SendServer) error {
 //lang nghe phan hoi tu client
 	go listenToClient(stream, dangki.GetToNumber())
 
-	//abc()
+	abc()
 	log.Println("[Send]: ket thuc ham Send")
 	return nil
 }
