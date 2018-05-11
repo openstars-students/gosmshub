@@ -7,7 +7,7 @@ import (
 	pb "example/SendSMS"
 	"google.golang.org/grpc"
 	"git.apache.org/thrift.git/lib/go/thrift"
-	"example/SendSMS/serverThrift/gen-go/demo"
+	"example/gosmshub/serverThrift/gen-go/demo"
 	"strings"
 	"os"
 	"github.com/claudiu/gocron"
@@ -62,7 +62,6 @@ func abc(){
 var dem = 0
 func (svr *SendSMSService) Send(stream pb.SendSMS_SendServer) error {
 //luu cau truc thong tin cua 1 client
-
 	dangki, _ := stream.Recv()
 	client := &Client{
 		sdt:  dangki.GetToNumber(),
@@ -73,7 +72,6 @@ func (svr *SendSMSService) Send(stream pb.SendSMS_SendServer) error {
 	clients[dangki.GetToNumber()] = client
 //lang nghe phan hoi tu client
 	go listenToClient(stream, dangki.GetToNumber())
-
 	abc()
 	log.Println("[Send]: ket thuc ham Send")
 	return nil

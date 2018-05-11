@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
-	pb "example/SendSMS"
+	pb "example/gosmshub"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"strconv"

@@ -4,7 +4,7 @@ import (
     "fmt"
     "os"
     "git.apache.org/thrift.git/lib/go/thrift"
-    "example/SendSMS/serverThrift/gen-go/demo"
+    "example/gosmshub/serverThrift/gen-go/demo"
     "bufio"
     "strings"
 )
