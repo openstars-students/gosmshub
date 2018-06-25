@@ -1,0 +1,1 @@
+cd ~/go/src/gosmshub/cmd/server/main/ ;go run main.go

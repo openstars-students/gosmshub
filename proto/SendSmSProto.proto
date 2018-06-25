@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.UserSMS";
+option java_outer_classname = "UserHelper";
+option objc_class_prefix = "HLW";
+
+package SendSms;
+//thay giai thich ki hon cai AuthMessage hoat dong ntn? server lam gi voi no?
+message AuthMessage {
+//appID chua gi? de lam gi?
+    string appID = 1 ;
+    string timeStamp = 2;
+//authSignature chua gi? de lam gi?
+    string authSignature = 3;
+}
+
+message SmsAgentInfo {
+///fullnumber là number của thằng nào thế ạ?
+    string fullNumber = 1;
+//dailyLimit là số lượng tin nhắn trong 1 ngày phải không thầy?
+    int32 dailyLimit = 2;
+//totalLimit giới hạn số lượng trong bao lâu thế ạ?
+    int32 totalLimit = 3;
+    string rewardAddress = 4;
+}
+
+//Khi client (android) nhận được SMS thì có thể forward lên server qua tin nhắn này
+message IncomingMsg{
+//fromNumber co phai la sdt cua app khong?
+    string fromNumber = 1;
+    string content = 2;
+    int64 timeStamp = 3;
+    //sao lai ko co toNumber???
+}
+
+message C2SMessage {
+    oneof authClient{
+        AuthMessage auth = 1;       // Tin đầu tiên trong stream phải là loại này , server có thể chưa cần check kỹ
+        SmsAgentInfo smsAgent = 2;  // Tin thứ 2 trong stream từ client gửi lên ,
+    }
+    int64 timeStamp = 3;
+    bool success =6;
+    IncomingMsg incomingMessage = 4; //optional
+//extData de lam gi?
+    string extData = 5;
+}
+
+// message from server to client
+//thuc thien cac lệnh khac nhau
+//lệnh SendSms
+message CommandSendSmS{
+    string toNumber =1;
+    string content =2;
+}
+message S2CMesssage{
+    oneof choseCommand{
+        CommandSendSmS Message = 1;
+    }
+}
+
+service SMSBlockChainHub {
+    rpc BiDiMessage(stream C2SMessage) returns (stream S2CMesssage){}
+}
